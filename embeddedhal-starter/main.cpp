@@ -1,6 +1,6 @@
 #include <liblpc40xx/output_pin.hpp>
+#include <liblpc40xx/uart.hpp>
 #include <libembeddedhal/context.hpp>
-#include <cstdio>
 
 void loop_for(int count)
 {
@@ -15,8 +15,11 @@ void loop_for(int count)
 int main()
 {
   auto &led = embed::lpc40xx::get_output_pin<1, 18>();
+  auto &terminal = embed::lpc40xx::get_uart<0>();
 
-  [[maybe_unused]] bool success = led.initialize();
+  [[maybe_unused]] bool success;
+  success = led.initialize();
+  success = terminal.initialize();
 
   while (true)
   {
@@ -24,9 +27,9 @@ int main()
     loop_for(100'000);
     led.level(true);
     loop_for(100'000);
+    terminal.write(std::as_bytes(std::span<const char>("Hello, World\n")));
   }
 
-  // printf("Hello from Embedded Land!\n");
   return 0;
 }
 
