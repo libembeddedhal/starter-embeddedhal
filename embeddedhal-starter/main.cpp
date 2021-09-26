@@ -1,11 +1,32 @@
 #include <liblpc40xx/output_pin.hpp>
+#include <libembeddedhal/context.hpp>
+#include <cstdio>
+
+void loop_for(int count)
+{
+  volatile int i = 0;
+  while (i < count)
+  {
+    i = i + 1;
+    continue;
+  }
+}
 
 int main()
 {
-  auto &led = embed::lpc40xx::get_output_pin<0, 0>();
+  auto &led = embed::lpc40xx::get_output_pin<1, 18>();
 
   [[maybe_unused]] bool success = led.initialize();
-  led.level(true);
+
+  while (true)
+  {
+    led.level(false);
+    loop_for(100'000);
+    led.level(true);
+    loop_for(100'000);
+  }
+
+  // printf("Hello from Embedded Land!\n");
   return 0;
 }
 

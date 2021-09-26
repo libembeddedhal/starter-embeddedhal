@@ -1,6 +1,7 @@
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR ARM)
 
+set(TOOLCHAIN_NAME "arm-newlib")
 set(TOOLCHAIN_PREFIX arm-none-eabi-)
 
 set(BINUTILS_PATH ${CMAKE_SOURCE_DIR}/tools/gcc-arm-none-eabi-10.3.2021.07/bin)
