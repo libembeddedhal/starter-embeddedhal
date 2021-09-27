@@ -43,8 +43,7 @@ target_compile_options(${EXECUTABLE} PRIVATE
 -ffreestanding
 
 -Wall
-
-$<$<CONFIG:Debug>:-Og>
+-g
 )
 
 target_link_options(${EXECUTABLE} PRIVATE
@@ -77,6 +76,7 @@ target_link_options(${EXECUTABLE} PRIVATE
 -Wl,-Map=${PROJECT_NAME}.map,--cref
 -Wl,--gc-sections
 -Wl,--print-memory-usage
+-g
 )
 endif()
 
