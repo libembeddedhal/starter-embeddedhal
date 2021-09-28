@@ -5,31 +5,15 @@
 #include <libarmcortex/dwt_counter.hpp>
 #include <libembeddedhal/clock.hpp>
 
-cortex_m::dwt_counter counter;
-
 int main()
 {
   embed::lpc40xx::initialize_platform();
   auto &led = embed::lpc40xx::get_output_pin<1, 18>();
-  auto &terminal = embed::lpc40xx::get_uart<0>();
+  auto &terminal = embed::lpc40xx::get_uart<0, 64u>();
 
   [[maybe_unused]] bool success;
   success = led.initialize();
   success = terminal.initialize();
-  counter.start();
-
-  auto global_sleep = [](std::chrono::nanoseconds delay)
-  {
-    using namespace std::chrono_literals;
-
-    auto timeout_time = counter.count64() + delay / 83ns;
-    while (timeout_time > counter.count64())
-    {
-      continue;
-    }
-  };
-
-  embed::this_thread::set_global_sleep(global_sleep);
 
   while (true)
   {
