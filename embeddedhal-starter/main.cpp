@@ -9,7 +9,7 @@ int main()
 {
   embed::lpc40xx::initialize_platform();
   auto &led = embed::lpc40xx::get_output_pin<1, 18>();
-  auto &terminal = embed::lpc40xx::get_uart<0, 64u>();
+  auto &terminal = embed::lpc40xx::get_uart<0>();
 
   [[maybe_unused]] bool success;
   success = led.initialize();
@@ -25,7 +25,7 @@ int main()
     terminal.write(std::as_bytes(std::span<const char>("\nHello, World> ")));
     if (terminal.bytes_available() > 0)
     {
-      std::array<std::byte, 128> buffer{};
+      std::array<std::byte, 512> buffer{};
       terminal.write(terminal.read(buffer));
     }
   }
@@ -35,8 +35,8 @@ int main()
 
 extern "C"
 {
-  inline void __cxa_pure_virtual() {}
-  inline void __cxa_atexit() {}
+  void __cxa_pure_virtual() {}
+  void __cxa_atexit() {}
 }
 
 namespace __cxxabiv1

@@ -11,6 +11,7 @@ set(EXECUTABLE ${PROJECT_NAME}.elf)
 
 find_package(liblpc40xx CONFIG REQUIRED)
 find_package(libxbitset CONFIG REQUIRED)
+
 add_executable(${EXECUTABLE} embeddedhal-starter/main.cpp)
 
 target_compile_features(${EXECUTABLE} PRIVATE cxx_std_20)
